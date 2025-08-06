@@ -2,8 +2,11 @@ package com.project.jobportal.controller;
 
 
 import com.project.jobportal.entity.JobPostActivity;
+<<<<<<< HEAD
 import com.project.jobportal.entity.RecruiterJobsDto;
 import com.project.jobportal.entity.RecruiterProfile;
+=======
+>>>>>>> 90f8afba7cc514010cd0d0fb2c72c04229c2fb2e
 import com.project.jobportal.entity.Users;
 import com.project.jobportal.services.JobPostActivityService;
 import com.project.jobportal.services.UsersService;
@@ -18,12 +21,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Date;
+<<<<<<< HEAD
 import java.util.List;
+=======
+>>>>>>> 90f8afba7cc514010cd0d0fb2c72c04229c2fb2e
 
 @Controller
 public class JobPostActivityController {
 
     private final UsersService usersService;
+    private final JobPostActivityService jobPostActivityService;
 
     private final JobPostActivityService jobPostActivityService;
 
