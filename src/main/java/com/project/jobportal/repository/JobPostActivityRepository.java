@@ -1,6 +1,6 @@
 package com.project.jobportal.repository;
 
-<<<<<<< HEAD
+
 import com.project.jobportal.entity.IRecruiterJobs;
 import com.project.jobportal.entity.JobPostActivity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,13 +23,5 @@ public interface JobPostActivityRepository extends JpaRepository<JobPostActivity
 
 
  List<IRecruiterJobs>getRecruiterJobs(@Param("recruiter") int recruiter);
-=======
-import com.project.jobportal.entity.JobPostActivity;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface JobPostActivityRepository extends JpaRepository<JobPostActivity, Integer> {
-
->>>>>>> 90f8afba7cc514010cd0d0fb2c72c04229c2fb2e
-
 
 }

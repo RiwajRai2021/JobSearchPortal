@@ -2,11 +2,8 @@ package com.project.jobportal.controller;
 
 
 import com.project.jobportal.entity.JobPostActivity;
-<<<<<<< HEAD
 import com.project.jobportal.entity.RecruiterJobsDto;
 import com.project.jobportal.entity.RecruiterProfile;
-=======
->>>>>>> 90f8afba7cc514010cd0d0fb2c72c04229c2fb2e
 import com.project.jobportal.entity.Users;
 import com.project.jobportal.services.JobPostActivityService;
 import com.project.jobportal.services.UsersService;
@@ -21,17 +18,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Date;
-<<<<<<< HEAD
 import java.util.List;
-=======
->>>>>>> 90f8afba7cc514010cd0d0fb2c72c04229c2fb2e
 
 @Controller
 public class JobPostActivityController {
 
     private final UsersService usersService;
-    private final JobPostActivityService jobPostActivityService;
-
     private final JobPostActivityService jobPostActivityService;
 
     @Autowired
@@ -41,36 +33,37 @@ public class JobPostActivityController {
     }
 
     @GetMapping("/dashboard/")
-    public String searchJobs(Model model){
+    public String searchJobs(Model model) {
 
         Object currentUserProfile = usersService.getCurrentUserProfile();
-          Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-          if(!(authentication instanceof AnonymousAuthenticationToken)){
-              String currentUsername = authentication.getName();
-              model.addAttribute("username", currentUsername);
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            String currentUsername = authentication.getName();
+            model.addAttribute("username", currentUsername);
+            if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("Recruiter"))) {
+                List<RecruiterJobsDto> recruiterJobs = jobPostActivityService.getRecruiterJobs(((RecruiterProfile) currentUserProfile).getUserAccountId());
+                model.addAttribute("jobPost", recruiterJobs);
+            }
+        }
 
-              if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("Recruiter"))){
-     List<RecruiterJobsDto>recruiterJobs = jobPostActivityService.getRecruiterJobs(((RecruiterProfile)currentUserProfile).getUserAccountId());
-    model.addAttribute("jobPost", recruiterJobs);
-              }
-          }
-            model.addAttribute("user", currentUserProfile);
+        model.addAttribute("user", currentUserProfile);
+
         return "dashboard";
     }
 
     @GetMapping("/dashboard/add")
-    public String addJobs(Model model){
+    public String addJobs(Model model) {
         model.addAttribute("jobPostActivity", new JobPostActivity());
         model.addAttribute("user", usersService.getCurrentUserProfile());
         return "add-jobs";
     }
 
     @PostMapping("/dashboard/addNew")
-    public String addNew(JobPostActivity jobPostActivity, Model model){
+    public String addNew(JobPostActivity jobPostActivity, Model model) {
 
         Users user = usersService.getCurrentUser();
-        if(user!=null){
+        if (user != null) {
             jobPostActivity.setPostedById(user);
         }
         jobPostActivity.setPostedDate(new Date());
@@ -78,5 +71,4 @@ public class JobPostActivityController {
         JobPostActivity saved = jobPostActivityService.addNew(jobPostActivity);
         return "redirect:/dashboard/";
     }
-
 }
